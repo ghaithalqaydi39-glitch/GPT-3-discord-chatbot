@@ -58,9 +58,14 @@ client.on(Events.MessageCreate, async (message) => {
   stop: ["\n"]
 });
 
+  console.log("response:", response.choices?.[0]?.message?.content);
+  
+  if (response.choices && response.choices.length > 0 && response.choices[0].message) {
+    await message.channel.send(response.choices[0].message.content);
+  } else {
+    await message.channel.send("Hmm, I couldn't generate a response for that.");
+  }
 
-    console.log("response:", response.choices[0].message.content);
-await message.channel.send(response.choices[0].message.content);
 
 
 })
