@@ -51,21 +51,24 @@ client.on(Events.MessageCreate, async (message) => {
     prompt += `${client.user.username}:`
     console.log("prompt:", prompt)
 
-    const response = await openai.chat.completions.create({
-  model: "gpt-3.5-turbo",
-  messages: [{ role: "user", content: prompt }],
-  max_tokens: 500,
-  stop: ["\n"]
-});
+    try {
+  const response = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: prompt }],
+    max_tokens: 500,
+    stop: ["\n"]
+  });
 
-  console.log("response:", response.choices?.[0]?.message?.content);
-  
-  if (response.choices && response.choices.length > 0 && response.choices[0].message) {
-    await message.channel.send(response.choices[0].message.content);
+  const reply = response.choices?.[0]?.message?.content;
+  console.log("response:", reply);
+
+  if (reply && reply.trim().length > 0) {
+    await message.channel.send(reply);
   } else {
-    await message.channel.send("Hmm, I couldn't generate a response for that.");
+    await message.channel.send("Hmm, I got an empty response from the AI.");
   }
+} catch (error) {
+  console.error("Error details:", error);
+  await message.channel.send("Oops, I ran into an error processing that!");
+}
 
-
-
-})
