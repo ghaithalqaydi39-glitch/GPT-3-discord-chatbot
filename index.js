@@ -68,8 +68,10 @@ client.on(Events.MessageCreate, async (message) => {
     await message.channel.send("Hmm, I got an empty response from the AI.");
   }
 } catch (error) {
-  console.error("Error details:", error);
-  await message.channel.send("Oops, I ran into an error processing that!");
+    console.error("Error details:", error);
+    await message.channel.send("Oops, I ran into an error processing that!");
+} 
+
 });
 
 client.login(process.env.DISCORD_TOKEN);
