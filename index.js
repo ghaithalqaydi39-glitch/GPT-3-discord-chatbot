@@ -51,13 +51,16 @@ client.on(Events.MessageCreate, async (message) => {
     prompt += `${client.user.username}:`
     console.log("prompt:", prompt)
 
-    const response = await openai.createCompletion({
-        prompt,
-        model: "text-davinci-003",
+    const response = await openai.chat.completions.create⁠({
+        messages: [{ role: "user", content: prompt }],
+
+        model: "⁠gpt-3.5-turbo⁠",
         max_tokens: 500,
         stop: ["\n"]
     })
 
-    console.log("response", response.data.choices[0].text)
-    await message.channel.send(response.data.choices[0].text)
+    console.log("response:", response.choices[0].message.content);
+await message.channel.send(response.choices[0].message.content);
+
+
 })
