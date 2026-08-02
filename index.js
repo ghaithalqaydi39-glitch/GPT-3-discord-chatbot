@@ -13,10 +13,9 @@ const client = new Client({
   ]
 });
 
-    apiKey: process.env.OPENAI_KEY
-})
-
-const openai = new OpenAIApi(config)
+client.on('messageCreate', async message => {
+  if (message.author.bot) return;
+  // rest of your message handling code...
 
 const client = new Client({
     intents: [
